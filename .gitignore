@@ -1,0 +1,14 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/DatatypesPractice/DatatypesPractice/bin/Debug/net6.0
+/DatatypesPractice/DatatypesPractice/obj
+/DatatypesPractice/MauiApp1/bin/Debug/net7.0-windows10.0.19041.0/win10-x64
+/DatatypesPractice/MauiApp1/obj
+/DatatypesPractice/EmployeeData/obj
+/FirstWebserviceDemo/FirstWebserviceDemo/obj
+/WineShopWebAPI/.vs
+/WineShopWebAPI/WineShopWebAPI/bin
+/WineShopWebAPI/WineShopWebAPI/Migrations
+/WineShopWebAPI/WineShopWebAPI/obj
