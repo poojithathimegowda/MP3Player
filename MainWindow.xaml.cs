@@ -19,7 +19,6 @@ namespace MP3player
             mediaPlayer.LoadedBehavior = MediaState.Manual;
             mediaPlayer.UnloadedBehavior = MediaState.Manual;
             mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
-
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
@@ -89,7 +88,6 @@ namespace MP3player
                 lblCurrentTime.Content = mediaPlayer.Position.ToString(@"mm\:ss");
             }
         }
-
         private void SldVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             mediaPlayer.Volume = sldVolume.Value;
