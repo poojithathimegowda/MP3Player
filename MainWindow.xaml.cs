@@ -30,21 +30,40 @@ namespace MP3player
         private void BtnOpenFile_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect= true;
             openFileDialog.Filter = "MP3 files (*.mp3)|*.mp3|All files (*.*)|*.*";
+            
             if (openFileDialog.ShowDialog() == true)
             {
-                mediaPlayer.Source = new Uri(openFileDialog.FileName);
-                mediaPlayer.Play();
-                lstPlaylist.Items.Add(openFileDialog.FileName);
+                foreach (string fileName in openFileDialog.FileNames)
+                {
+                    lstPlaylist.Items.Add(fileName); // Add each selected file to the ListBox
+                }
             }
         }
 
         private void BtnPlay_Click(object sender, RoutedEventArgs e)
         {
-            mediaPlayer.Play();
-            timer.Start();
+            if (lstPlaylist.SelectedItem != null)
+            {
+                mediaPlayer.Source = new Uri(lstPlaylist.SelectedItem.ToString());
+                mediaPlayer.Play();
+                timer.Start(); // Assuming you have a timer for some purpose like tracking playback progress
+            }
+            else
+            {
+                MessageBox.Show("Please select a file to play.");
+            }
         }
-
+        private void lstPlaylist_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lstPlaylist.SelectedItem != null)
+            {
+                mediaPlayer.Source = new Uri(lstPlaylist.SelectedItem.ToString());
+                mediaPlayer.Play();
+                timer.Start();
+            }
+        }
         private void BtnPause_Click(object sender, RoutedEventArgs e)
         {
             mediaPlayer.Pause();
