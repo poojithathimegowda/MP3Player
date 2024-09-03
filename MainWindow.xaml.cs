@@ -1,5 +1,4 @@
-﻿
-using Microsoft.Win32; // For OpenFileDialog
+﻿using Microsoft.Win32; // For OpenFileDialog
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,16 +21,15 @@ namespace MP3player
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
-
             sldVolume.Value = 0.5; // Set initial volume
         }
 
         private void BtnOpenFile_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Multiselect= true;
+            openFileDialog.Multiselect = true; // Allow multiple file selection
             openFileDialog.Filter = "MP3 files (*.mp3)|*.mp3|All files (*.*)|*.*";
-            
+
             if (openFileDialog.ShowDialog() == true)
             {
                 foreach (string fileName in openFileDialog.FileNames)
@@ -47,22 +45,29 @@ namespace MP3player
             {
                 mediaPlayer.Source = new Uri(lstPlaylist.SelectedItem.ToString());
                 mediaPlayer.Play();
-                timer.Start(); // Assuming you have a timer for some purpose like tracking playback progress
+                timer.Start(); // Start the timer to track playback progress
             }
             else
             {
                 MessageBox.Show("Please select a file to play.");
             }
         }
+
         private void lstPlaylist_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            // Optional: If you want the media player to automatically stop the currently playing file when a new item is selected.
+            if (mediaPlayer.Source != null && mediaPlayer.CanPause)
+            {
+                mediaPlayer.Stop();
+                timer.Stop();
+            }
+            // Update the media source but do not play until "Play" is clicked.
             if (lstPlaylist.SelectedItem != null)
             {
                 mediaPlayer.Source = new Uri(lstPlaylist.SelectedItem.ToString());
-                mediaPlayer.Play();
-                timer.Start();
             }
         }
+
         private void BtnPause_Click(object sender, RoutedEventArgs e)
         {
             mediaPlayer.Pause();
@@ -88,6 +93,7 @@ namespace MP3player
                 lblCurrentTime.Content = mediaPlayer.Position.ToString(@"mm\:ss");
             }
         }
+
         private void SldVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             mediaPlayer.Volume = sldVolume.Value;
